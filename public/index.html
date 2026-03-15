@@ -45,6 +45,15 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
         .bg-scene {
             position: fixed;
             inset: 0;
@@ -302,17 +311,6 @@
             perspective: 1000px;
             will-change: transform;
             transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1);
-            overflow-y: auto;
-            max-height: 520px;
-        }
-
-        .logs-panel::-webkit-scrollbar {
-            display: none;
-        }
-
-        .logs-panel {
-            scrollbar-width: none;
-            -ms-overflow-style: none;
         }
 
         .logs-panel:hover {
@@ -609,7 +607,7 @@
         <a href="https://discord.gg/KQvT2gmrvf" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; transition: all 0.3s; margin-bottom: 16px;">
             <i class="ph ph-discord-logo"></i> Discord
         </a>
-        <div style="font-size: 0.75rem; color: var(--text-muted);">© 2026 RoOffsets All rights reserved.</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">© 2026 0x108. All rights reserved.</div>
     </footer>
 </body>
 </html>
