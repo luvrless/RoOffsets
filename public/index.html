@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,15 +30,12 @@
             --surface-hover: rgba(39, 39, 42, 0.85);
             --border: rgba(63, 63, 70, 0.4);
             --border-hover: rgba(161, 161, 170, 0.5);
-
             --accent-1: #3b82f6;
             --accent-2: #60a5fa;
             --accent-glow: rgba(59, 130, 246, 0.15);
-
             --text-primary: #f8fafc;
             --text-secondary: #a1a1aa;
             --text-muted: #71717a;
-
             --font-display: 'Inter', sans-serif;
             --font-mono: 'Space Mono', monospace;
         }
@@ -92,7 +88,6 @@
             0% {
                 transform: translateY(0) scale(1);
             }
-
             100% {
                 transform: translateY(30px) scale(1.05);
             }
@@ -158,13 +153,11 @@
         }
 
         @keyframes pulse {
-
             0%,
             100% {
                 opacity: 1;
                 transform: scale(1);
             }
-
             50% {
                 opacity: 0.5;
                 transform: scale(0.8);
@@ -320,6 +313,23 @@
             flex-direction: column;
             gap: 20px;
             height: fit-content;
+
+            /* 3D tilt effect */
+            transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            will-change: transform;
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1);
+        }
+
+        .logs-panel:hover {
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(59, 130, 246, 0.18);
+        }
+
+        .logs-panel.moving {
+            transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .logs-header {
@@ -387,7 +397,7 @@
         .log-meta {
             display: flex;
             align-items: center;
-            gap: 4px; /* small gap ~ 1 space */
+            gap: 4px;
             font-size: 0.8rem;
             color: var(--text-secondary);
         }
@@ -401,7 +411,6 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -409,7 +418,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="bg-scene">
         <div class="bg-glow-1"></div>
@@ -424,19 +432,16 @@
                     <span class="status-dot"></span> API ONLINE & CONNECTED
                 </div>
                 <h1 class="title">Roblox Offsets</h1>
-                    <p class="subtitle">Always Updated Roblox Offsets</p>
+                <p class="subtitle">Always Updated Roblox Offsets</p>
             </div>
 
             <div class="content-container">
-
                 <div class="cards-grid">
-
                     <a href="/api/offsets.hpp" class="card" target="_blank">
                         <i class="ph ph-arrow-up-right card-arrow"></i>
                         <div class="card-icon-wrap"><i class="ph ph-file-cpp"></i></div>
                         <div class="card-title">offsets.hpp</div>
-                        <div class="card-desc">C++ header file format for classic integrations. Automatically dumped.
-                        </div>
+                        <div class="card-desc">C++ header file format for classic integrations. Automatically dumped.</div>
                     </a>
 
                     <a href="/api/offsets_structured.hpp" class="card" target="_blank">
@@ -473,20 +478,20 @@
                         <div class="card-title">Version</div>
                         <div class="card-desc">Check the raw current Roblox hash this API is tracking.</div>
                     </a>
-
                 </div>
 
                 <div class="logs-panel">
                     <div class="logs-header">
-                        <div class="logs-title"><i class="ph-fill ph-clock-counter-clockwise"></i> Live Update Logs
+                        <div class="logs-title">
+                            <i class="ph-fill ph-clock-counter-clockwise"></i> Live Update Logs
                         </div>
                     </div>
                     <div class="logs-list" id="logs-list">
-                        <div style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">Loading live
-                            logs...</div>
+                        <div style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                            Loading live logs...
+                        </div>
                     </div>
                 </div>
-
             </div>
         </main>
     </div>
@@ -497,7 +502,6 @@
                 const res = await fetch('/api/logs');
                 if (!res.ok) throw new Error('API Error');
                 const logs = await res.json();
-
                 const logContainer = document.getElementById('logs-list');
                 logContainer.innerHTML = '';
 
@@ -521,7 +525,6 @@
                 logs.slice(0, 8).forEach(log => {
                     const d = new Date(log.date);
                     const timeAgo = Math.round((new Date() - d) / 60000);
-
                     let timeStr = "";
                     if (timeAgo < 60) timeStr = `${timeAgo}m ago`;
                     else if (timeAgo < 1440) timeStr = `${Math.floor(timeAgo / 60)}h ago`;
@@ -533,25 +536,80 @@
                         <div class="log-version">${log.version}</div>
                         <div class="log-meta">
                             <span class="log-status">${log.status}</span>
-                            <span>&nbsp;${timeStr}</span>
+                            <span> ${timeStr}</span>
                         </div>
                     `;
                     logContainer.appendChild(el);
                 });
 
                 document.getElementById('api-status').innerHTML = '<span class="status-dot"></span> API ONLINE & CONNECTED';
-
             } catch (err) {
                 console.warn('API connection failed.', err);
                 document.getElementById('logs-list').innerHTML = `
-                    <div style="color: #ef4444; font-size: 0.9rem;">Failed to connect to Local API. Make sure Node.js server is running!</div>
+                    <div style="color: #ef4444; font-size: 0.9rem;">
+                        Failed to connect to Local API. Make sure Node.js server is running!
+                    </div>
                 `;
-                document.getElementById('api-status').innerHTML = '<span class="status-dot" style="background:#ef4444;box-shadow:0 0 10px #ef4444"></span> API OFFLINE';
+                document.getElementById('api-status').innerHTML = 
+                    '<span class="status-dot" style="background:#ef4444;box-shadow:0 0 10px #ef4444"></span> API OFFLINE';
             }
         }
 
         fetchLogs();
         setInterval(fetchLogs, 30000);
+    </script>
+
+   
+    <script>
+        const logsPanel = document.querySelector('.logs-panel');
+
+        if (logsPanel) {
+            let rect, centerX, centerY;
+            let rafScheduled = false;
+
+            function updateTilt(e) {
+                if (!rafScheduled) {
+                    rafScheduled = true;
+                    requestAnimationFrame(() => {
+                        rafScheduled = false;
+
+                        if (!rect) {
+                            rect = logsPanel.getBoundingClientRect();
+                            centerX = rect.left + rect.width / 2;
+                            centerY = rect.top + rect.height / 2;
+                        }
+
+                        const dx = (e.clientX - centerX) / (rect.width / 2);
+                        const dy = (e.clientY - centerY) / (rect.height / 2);
+
+                        // Invert direction → panel leans AWAY from cursor
+                        const tiltX = dy * -12;   // vertical
+                        const tiltY = dx * -18;   // horizontal
+
+                        logsPanel.style.transform = 
+                            `perspective(1000px) ` +
+                            `rotateX(${tiltX}deg) ` +
+                            `rotateY(${tiltY}deg) ` +
+                            `scale(1.015)`;
+
+                        logsPanel.classList.add('moving');
+                    });
+                }
+            }
+
+            function resetTilt() {
+                logsPanel.style.transform = 
+                    `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+                logsPanel.classList.remove('moving');
+                rect = null; 
+            }
+
+            logsPanel.addEventListener('mousemove', updateTilt);
+            logsPanel.addEventListener('mouseleave', resetTilt);
+
+            
+            window.addEventListener('resize', () => { rect = null; });
+        }
     </script>
 
     <footer
@@ -569,5 +627,4 @@
         <div style="font-size: 0.75rem; color: var(--text-muted);">© 2026 0x108. All rights reserved.</div>
     </footer>
 </body>
-
 </html>
