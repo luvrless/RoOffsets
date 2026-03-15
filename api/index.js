@@ -33,7 +33,7 @@ app.get('/api/version', (req, res) => proxyFile(req, res, 'version'));
 // Dynamically fetches the last 6 commits SPECIFICALLY made to the "version" file to track game updates.
 app.get('/api/logs', async (req, res) => {
     try {
-        const response = await axios.get(`${GITHUB_API_COMMITS}?path=version&per_page=6`);
+        const response = await axios.get(`${GITHUB_API_COMMITS}?path=version&per_page=8`);
         const commits = response.data;
         
         const logs = await Promise.all(commits.map(async (commit, index) => {
