@@ -7,7 +7,7 @@ RoOffsets is a Roblox offset provider that delivers the latest Roblox memory off
 ## Website
 
 Get the latest offsets here:  
-https://ro-offsets.vercel.app
+https://liveoffsets.vercel.app
 
 ## About
 
