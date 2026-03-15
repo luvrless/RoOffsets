@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Roblox Offsets</title>
+    <link rel="icon"
+        href="https://media.discordapp.net/attachments/1481691719564136490/1482580010568257667/roblox.png?ex=69b777bb&is=69b6263b&hm=15a455d170a6357d6d338d234b20df9c137792d990092cad66f1e7c36dc887e1&=&format=webp&quality=lossless"
+        type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #09090b;
+            --surface: rgba(24, 24, 27, 0.65);
+            --surface-hover: rgba(39, 39, 42, 0.85);
+            --border: rgba(63, 63, 70, 0.4);
+            --border-hover: rgba(161, 161, 170, 0.5);
+
+            --accent-1: #3b82f6;
+            --accent-2: #60a5fa;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+
+            --text-primary: #f8fafc;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+
+            --font-display: 'Inter', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        html,
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-scene {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-glow-1,
+        .bg-glow-2 {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            animation: float 15s ease-in-out infinite alternate;
+        }
+
+        .bg-glow-1 {
+            top: -20%;
+            left: 20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent 70%);
+        }
+
+        .bg-glow-2 {
+            bottom: -30%;
+            right: 0%;
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(29, 78, 216, 0.12), transparent 70%);
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(30px) scale(1.05);
+            }
+        }
+
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse 100% 100% at 50% 0%, black 20%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 0%, black 20%, transparent 80%);
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 24px 80px;
+            gap: 60px;
+        }
+
+        .header {
+            text-align: center;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 99px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            background: rgba(59, 130, 246, 0.1);
+            font-size: 13px;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            color: var(--accent-2);
+            letter-spacing: 0.05em;
+            margin-bottom: 24px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .content-container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 40px;
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        @media (max-width: 968px) {
+            .content-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            align-content: start;
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 28px;
+            border-radius: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--border-hover);
+            background: var(--surface-hover);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(59, 130, 246, 0.1);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon-wrap {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon-wrap {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .card-icon-wrap i {
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .card:hover .card-icon-wrap i {
+            color: var(--accent-2);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .logs-panel {
+            background: rgba(15, 15, 18, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: fit-content;
+        }
+
+        .logs-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logs-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logs-title i {
+            color: var(--accent-1);
+        }
+
+        .logs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .log-item {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .log-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-1);
+            box-shadow: 0 0 8px var(--accent-1);
+        }
+
+        .log-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 18px;
+            width: 2px;
+            height: calc(100% + 10px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .log-version {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 4px;
+            word-break: break-all;
+        }
+
+        .log-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .log-status {
+            color: #10b981;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-scene">
+        <div class="bg-glow-1"></div>
+        <div class="bg-glow-2"></div>
+        <div class="bg-grid"></div>
+    </div>
+
+    <div class="page">
+        <main>
+            <div class="header">
+                <div class="status-badge" id="api-status">
+                    <span class="status-dot"></span> API ONLINE & CONNECTED
+                </div>
+                <h1>Advanced <br />Offsets Provider</h1>
+                <p class="subtitle">Fully automated API actively scraping and dumping the latest internal Roblox offsets
+                    using custom proprietary backends.</p>
+            </div>
+
+            <div class="content-container">
+
+                <div class="cards-grid">
+
+                    <a href="/api/offsets.hpp" class="card" target="_blank">
+                        <div class="card-icon-wrap"><i class="ph ph-file-cpp"></i></div>
+                        <div class="card-title">offsets.hpp</div>
+                        <div class="card-desc">C++ header file format for classic integrations. Automatically dumped.
+                        </div>
+                    </a>
+
+                    <a href="/api/offsets_structured.hpp" class="card" target="_blank">
+                        <div class="card-icon-wrap"><i class="ph ph-brackets-curly"></i></div>
+                        <div class="card-title">offsets_structured.hpp</div>
+                        <div class="card-desc">Modern structured C++ header format with unified namespaces.</div>
+                    </a>
+
+                    <a href="/api/offsets.json" class="card" target="_blank">
+                        <div class="card-icon-wrap"><i class="ph ph-file-code"></i></div>
+                        <div class="card-title">offsets.json</div>
+                        <div class="card-desc">Universal JSON format for all-purpose parsing and web integrations.</div>
+                    </a>
+
+                    <a href="/api/fflags.hpp" class="card" target="_blank">
+                        <div class="card-icon-wrap"><i class="ph ph-flag"></i></div>
+                        <div class="card-title">fflags.hpp</div>
+                        <div class="card-desc">FastFlag addresses for runtime engine configuration mapping.</div>
+                    </a>
+
+                    <a href="/api/internal" class="card" target="_blank">
+                        <div class="card-icon-wrap"><i class="ph ph-cpu"></i></div>
+                        <div class="card-title">Internal Offsets</div>
+                        <div class="card-desc">Deep engine internal game offsets for advanced memory reading.</div>
+                    </a>
+
+                    <a href="/api/version" class="card" target="_blank">
+                        <div class="card-icon-wrap"><i class="ph ph-tag"></i></div>
+                        <div class="card-title">Version</div>
+                        <div class="card-desc">Check the raw current Roblox hash this API is tracking.</div>
+                    </a>
+
+                </div>
+
+                <div class="logs-panel">
+                    <div class="logs-header">
+                        <div class="logs-title"><i class="ph-fill ph-clock-counter-clockwise"></i> Live Update Logs
+                        </div>
+                    </div>
+                    <div class="logs-list" id="logs-list">
+                        <div style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">Loading live
+                            logs...</div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        async function fetchLogs() {
+            try {
+                const res = await fetch('/api/logs');
+                if (!res.ok) throw new Error('API Error');
+                const logs = await res.json();
+
+                const logContainer = document.getElementById('logs-list');
+                logContainer.innerHTML = '';
+
+                if (logs.length === 0) {
+                    logContainer.innerHTML = '<div style="color: var(--text-muted); font-size: 0.9rem;">No recent updates found.</div>';
+                    return;
+                }
+
+                logs.slice(0, 6).forEach(log => {
+                    const d = new Date(log.date);
+                    const timeAgo = Math.round((new Date() - d) / 60000);
+
+                    let timeStr = "";
+                    if (timeAgo < 60) timeStr = `${timeAgo}m ago`;
+                    else if (timeAgo < 1440) timeStr = `${Math.floor(timeAgo / 60)}h ago`;
+                    else timeStr = `${Math.floor(timeAgo / 1440)}d ago`;
+
+                    const el = document.createElement('div');
+                    el.className = 'log-item';
+                    el.innerHTML = `
+                        <div class="log-version">${log.version}</div>
+                        <div class="log-meta">
+                            <span class="log-status">${log.status}</span>
+                            <span>${timeStr}</span>
+                        </div>
+                    `;
+                    logContainer.appendChild(el);
+                });
+
+                document.getElementById('api-status').innerHTML = '<span class="status-dot"></span> API ONLINE & CONNECTED';
+
+            } catch (err) {
+                console.warn('API connection failed.', err);
+                document.getElementById('logs-list').innerHTML = `
+                    <div style="color: #ef4444; font-size: 0.9rem;">Failed to connect to Local API. Make sure Node.js server is running!</div>
+                `;
+                document.getElementById('api-status').innerHTML = '<span class="status-dot" style="background:#ef4444;box-shadow:0 0 10px #ef4444"></span> API OFFLINE';
+            }
+        }
+
+        fetchLogs();
+        setInterval(fetchLogs, 30000);
+    </script>
+</body>
+
+</html>
