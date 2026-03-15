@@ -5,9 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Roblox Offsets</title>
-    <meta name="description" content="Always Updated Roblox Offsets. Fully automated API actively scraping and tracking the latest Roblox offsets." />
+    <meta name="description"
+        content="Always Updated Roblox Offsets. Fully automated API actively scraping and tracking the latest Roblox offsets." />
     <link rel="icon"
-        href="https://i.ibb.co/XfwdGmXC/roblox.png"
+        href="https://media.discordapp.net/attachments/1481691719564136490/1482580010568257667/roblox.png?ex=69b777bb&is=69b6263b&hm=15a455d170a6357d6d338d234b20df9c137792d990092cad66f1e7c36dc887e1&=&format=webp&quality=lossless"
         type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -249,6 +250,22 @@
             opacity: 1;
         }
 
+        .card-arrow {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 1.2rem;
+            color: var(--accent-2);
+            opacity: 0;
+            transform: translate(-10px, 10px);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .card:hover .card-arrow {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
         .card-icon-wrap {
             width: 50px;
             height: 50px;
@@ -405,8 +422,8 @@
                 <div class="status-badge" id="api-status">
                     <span class="status-dot"></span> API ONLINE & CONNECTED
                 </div>
-                <h1>Roblox <br />Offsets</h1>
-                <p class="subtitle">Always Updated Roblox Offsets</p>
+              <h1>Roblox Offsets</h1>
+                  <p class="subtitle">Always Updated Roblox Offsets</p>
             </div>
 
             <div class="content-container">
@@ -414,6 +431,7 @@
                 <div class="cards-grid">
 
                     <a href="/api/offsets.hpp" class="card" target="_blank">
+                        <i class="ph ph-arrow-up-right card-arrow"></i>
                         <div class="card-icon-wrap"><i class="ph ph-file-cpp"></i></div>
                         <div class="card-title">offsets.hpp</div>
                         <div class="card-desc">C++ header file format for classic integrations. Automatically dumped.
@@ -421,30 +439,35 @@
                     </a>
 
                     <a href="/api/offsets_structured.hpp" class="card" target="_blank">
+                        <i class="ph ph-arrow-up-right card-arrow"></i>
                         <div class="card-icon-wrap"><i class="ph ph-brackets-curly"></i></div>
                         <div class="card-title">offsets_structured.hpp</div>
                         <div class="card-desc">Modern structured C++ header format with unified namespaces.</div>
                     </a>
 
                     <a href="/api/offsets.json" class="card" target="_blank">
+                        <i class="ph ph-arrow-up-right card-arrow"></i>
                         <div class="card-icon-wrap"><i class="ph ph-file-code"></i></div>
                         <div class="card-title">offsets.json</div>
                         <div class="card-desc">Universal JSON format for all-purpose parsing and web integrations.</div>
                     </a>
 
                     <a href="/api/fflags.hpp" class="card" target="_blank">
+                        <i class="ph ph-arrow-up-right card-arrow"></i>
                         <div class="card-icon-wrap"><i class="ph ph-flag"></i></div>
                         <div class="card-title">fflags.hpp</div>
                         <div class="card-desc">FastFlag addresses for runtime engine configuration mapping.</div>
                     </a>
 
                     <a href="/api/internal" class="card" target="_blank">
+                        <i class="ph ph-arrow-up-right card-arrow"></i>
                         <div class="card-icon-wrap"><i class="ph ph-cpu"></i></div>
                         <div class="card-title">Internal Offsets</div>
                         <div class="card-desc">Deep engine internal game offsets for advanced memory reading.</div>
                     </a>
 
                     <a href="/api/version" class="card" target="_blank">
+                        <i class="ph ph-arrow-up-right card-arrow"></i>
                         <div class="card-icon-wrap"><i class="ph ph-tag"></i></div>
                         <div class="card-title">Version</div>
                         <div class="card-desc">Check the raw current Roblox hash this API is tracking.</div>
