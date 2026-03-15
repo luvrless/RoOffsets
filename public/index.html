@@ -4,16 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Roblox Offsets</title>
-    <meta name="description"
-        content="Always Updated Roblox Offsets. Fully automated API actively scraping and tracking the latest Roblox offsets." />
-    <link rel="icon"
-        href="https://i.ibb.co/XfwdGmXC/roblox.png"
-        type="image/png" />
+    <meta name="description" content="Always Updated Roblox Offsets. Fully automated API actively scraping and tracking the latest Roblox offsets." />
+    <link rel="icon" href="https://i.ibb.co/XfwdGmXC/roblox.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
         *,
@@ -85,12 +80,8 @@
         }
 
         @keyframes float {
-            0% {
-                transform: translateY(0) scale(1);
-            }
-            100% {
-                transform: translateY(30px) scale(1.05);
-            }
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(30px) scale(1.05); }
         }
 
         .bg-grid {
@@ -153,15 +144,8 @@
         }
 
         @keyframes pulse {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.5;
-                transform: scale(0.8);
-            }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
         }
 
         h1 {
@@ -313,13 +297,22 @@
             flex-direction: column;
             gap: 20px;
             height: fit-content;
-
-            /* 3D tilt effect */
             transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
             transform-style: preserve-3d;
             perspective: 1000px;
             will-change: transform;
             transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1);
+            overflow-y: auto;
+            max-height: 520px;
+        }
+
+        .logs-panel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .logs-panel {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
         .logs-panel:hover {
@@ -510,7 +503,6 @@
                     return;
                 }
 
-                // Add Current Version Header
                 const latestVersion = logs[0].version;
                 const versionHeader = document.createElement('div');
                 versionHeader.style.paddingBottom = "16px";
@@ -559,7 +551,6 @@
         setInterval(fetchLogs, 30000);
     </script>
 
-   
     <script>
         const logsPanel = document.querySelector('.logs-panel');
 
@@ -582,9 +573,8 @@
                         const dx = (e.clientX - centerX) / (rect.width / 2);
                         const dy = (e.clientY - centerY) / (rect.height / 2);
 
-                        // Invert direction → panel leans AWAY from cursor
-                        const tiltX = dy * -12;   // vertical
-                        const tiltY = dx * -18;   // horizontal
+                        const tiltX = dy * -12;
+                        const tiltY = dx * -18;
 
                         logsPanel.style.transform = 
                             `perspective(1000px) ` +
@@ -601,30 +591,25 @@
                 logsPanel.style.transform = 
                     `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
                 logsPanel.classList.remove('moving');
-                rect = null; 
+                rect = null;
             }
 
             logsPanel.addEventListener('mousemove', updateTilt);
             logsPanel.addEventListener('mouseleave', resetTilt);
 
-            
             window.addEventListener('resize', () => { rect = null; });
         }
     </script>
 
-    <footer
-        style="margin-top: auto; padding: 40px 20px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); position: relative; z-index: 1;">
-        <a href="https://discord.gg/KQvT2gmrvf" target="_blank"
-            style="color: var(--accent-2); text-decoration: none; font-size: 0.9rem; margin-bottom: 8px; display: block; transition: color 0.3s; font-family: var(--font-mono);">discord.gg/KQvT2gmrvf</a>
+    <footer style="margin-top: auto; padding: 40px 20px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); position: relative; z-index: 1;">
+        <a href="https://discord.gg/KQvT2gmrvf" target="_blank" style="color: var(--accent-2); text-decoration: none; font-size: 0.9rem; margin-bottom: 8px; display: block; transition: color 0.3s; font-family: var(--font-mono);">discord.gg/KQvT2gmrvf</a>
         <div style="font-size: 0.85rem; color: var(--text-primary); margin-bottom: 16px; font-weight: 500;">
-            Designed by <a href="https://github.com/luvrless" target="_blank"
-                style="color: var(--accent-2); text-decoration: none;">@luvrless</a>
+            Designed by <a href="https://github.com/luvrless" target="_blank" style="color: var(--accent-2); text-decoration: none;">@luvrless</a>
         </div>
-        <a href="https://discord.gg/KQvT2gmrvf" target="_blank"
-            style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; transition: all 0.3s; margin-bottom: 16px;">
+        <a href="https://discord.gg/KQvT2gmrvf" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; transition: all 0.3s; margin-bottom: 16px;">
             <i class="ph ph-discord-logo"></i> Discord
         </a>
-        <div style="font-size: 0.75rem; color: var(--text-muted);">© 2026 0x108. All rights reserved.</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">© 2026 RoOffsets All rights reserved.</div>
     </footer>
 </body>
 </html>
