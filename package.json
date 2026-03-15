@@ -1,7 +1,7 @@
 {
   "name": "offsets-api",
   "version": "1.0.0",
-  "description": "Custom Roblox Offsets Provider",
+  "description": "Roblox Offsets Provider",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
