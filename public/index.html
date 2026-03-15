@@ -386,7 +386,8 @@
 
         .log-meta {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            gap: 4px; /* small gap ~ 1 space */
             font-size: 0.8rem;
             color: var(--text-secondary);
         }
@@ -422,8 +423,8 @@
                 <div class="status-badge" id="api-status">
                     <span class="status-dot"></span> API ONLINE & CONNECTED
                 </div>
-              <h1>Roblox Offsets</h1>
-                  <p class="subtitle">Always Updated Roblox Offsets</p>
+                <h1 class="title">Roblox<br>Offsets</h1>
+                    <p class="subtitle">Always Updated Roblox Offsets</p>
             </div>
 
             <div class="content-container">
@@ -517,7 +518,7 @@
                 versionHeader.innerHTML = `Current version: <span style="font-family: var(--font-mono); color: var(--accent-2);">${latestVersion}</span>`;
                 logContainer.appendChild(versionHeader);
 
-                logs.slice(0, 6).forEach(log => {
+                logs.slice(0, 8).forEach(log => {
                     const d = new Date(log.date);
                     const timeAgo = Math.round((new Date() - d) / 60000);
 
@@ -531,9 +532,8 @@
                     el.innerHTML = `
                         <div class="log-version">${log.version}</div>
                         <div class="log-meta">
-                        <div class="log-meta">
                             <span class="log-status">${log.status}</span>
-                            <span>${timeStr}</span>
+                            <span>&nbsp;${timeStr}</span>
                         </div>
                     `;
                     logContainer.appendChild(el);
